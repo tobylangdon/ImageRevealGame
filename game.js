@@ -133,7 +133,7 @@ function valueToColour(value) {
 }
 
 function Enter() {
-    if (currentLetter != 5) {
+    if (currentLetter < 4) {
         console.log("Not enough letters");
         return;
     }
@@ -173,7 +173,7 @@ function Enter() {
 
     currentLetter = 0;
     currentRow++;
-    startRow();
+    // startRow();
 }
 
 function backSpace() {
@@ -187,22 +187,6 @@ function backSpace() {
         currentLetter--;
     }
 }
-function startRow() {
-    let row = document.getElementById(`row${currentRow}`);
-    if (row == null) {
-        row = document.createElement("div");
-        row.setAttribute("id", `row${currentRow}`);
-        row.setAttribute("class", "row");
-        wordCont.append(row);
-    }
-    for (i = 0; i < 5; i++) {
-        const newLetter = document.createElement("div");
-        newLetter.setAttribute(`id`, `${currentRow}${i}`);
-
-        // newLetter.textContent = this.id;
-        row.append(newLetter);
-    }
-}
 
 function keyDown() {
     if (this.id == "backspace") {
@@ -214,26 +198,26 @@ function keyDown() {
 
         return;
     }
-    // let row = document.getElementById(`row${currentRow}`);
-    // if (row == null) {
-    //     row = document.createElement("div");
-    //     row.setAttribute("id", `row${currentRow}`);
-    //     row.setAttribute("class", "row");
-    //     wordCont.append(row);
-    // }
-    // row = document.getElementById(`row${currentRow}`)
-    const square = document.getElementById(`${currentRow}${currentLetter}`);
-    square.textContent = this.id;
+    let row = document.getElementById(`row${currentRow}`);
+    if (row == null) {
+        row = document.createElement("div");
+        row.setAttribute("id", `row${currentRow}`);
+        row.setAttribute("class", "row");
+        wordCont.append(row);
+    }
+    row = document.getElementById(`row${currentRow}`);
+    // const square = document.getElementById(`${currentRow}${currentLetter}`);
+    // square.textContent = this.id;
 
-    // const newLetter = document.createElement("div");
+    const newLetter = document.createElement("div");
 
-    // newLetter.setAttribute(`id`, `${currentRow}${currentLetter}`);
+    newLetter.setAttribute(`id`, `${currentRow}${currentLetter}`);
     if (!grid[currentRow]) {
         grid[currentRow] = [];
     }
     grid[currentRow].push(this.id);
-    // newLetter.textContent = this.id;
-    // row.append(newLetter);
+    newLetter.textContent = this.id;
+    row.append(newLetter);
     currentLetter++;
 }
 
@@ -265,4 +249,3 @@ keys.forEach((key) => {
 //         i++;
 //     }
 // }
-startRow();
