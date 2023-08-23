@@ -146,7 +146,8 @@ function Enter() {
     for (i = 0; i < grid[currentRow].length; i++) {
         let square = document.getElementById(`${currentRow}${i}`);
         let letter = grid[currentRow][i].toLowerCase();
-        console.log(square);
+        const letterDiv = document.getElementById(letter.toUpperCase());
+        letterDiv.classList.add("enteredKey");
         square.classList.add("enteredRow");
         if (letter == secretWord[i]) {
             rowScore += (100 - 100 / secretWord.length) / secretWord.length;
@@ -164,12 +165,10 @@ function Enter() {
     }
     // Adding a number to end of row to specify accuracy of word
     let row = document.getElementById(`row${currentRow}`);
-    const score = document.createElement("div");
-
-    score.setAttribute(`class`, `score`);
+    let score = document.getElementById(`${currentRow}score`);
+    console.log(score);
     score.textContent = Math.floor(rowScore).toString();
-    score.style.color = valueToColour(rowScore);
-    row.append(score);
+    score.style.color = valueToColour(Math.floor(rowScore));
 
     currentLetter = 0;
     currentRow++;
@@ -188,13 +187,17 @@ function backSpace() {
     }
 }
 function startRow() {
+    const emptySpot = document.createElement("div");
+    emptySpot.setAttribute("class", "score");
     let row = document.getElementById(`row${currentRow}`);
+
     if (row == null) {
         row = document.createElement("div");
         row.setAttribute("id", `row${currentRow}`);
         row.setAttribute("class", "row");
         wordCont.append(row);
     }
+    row.append(emptySpot);
     for (i = 0; i < 5; i++) {
         const newLetter = document.createElement("div");
         newLetter.setAttribute(`id`, `${currentRow}${i}`);
@@ -202,6 +205,10 @@ function startRow() {
         // newLetter.textContent = this.id;
         row.append(newLetter);
     }
+    const scoreBox = document.createElement("div");
+    scoreBox.setAttribute("class", "score");
+    scoreBox.setAttribute("id", `${currentRow}score`);
+    row.append(scoreBox);
 }
 
 function keyDown() {
